@@ -36,5 +36,8 @@ int disastrOS_openResource(int resource_id, int type, int mode);
 int disastrOS_closeResource(int fd) ;
 int disastrOS_destroyResource(int resource_id);
 
+//funzioni semafori
+int disastrOS_semOpen(int fd);
+
 // debug function, prints the state of the internal system
 void disastrOS_printStatus();
