@@ -26,8 +26,8 @@ void childFunction(void* args){
   printf("---------------OPEN SEMAPHORES-----------------\n");
   printf("-----------------------------------------------\n");
   printf("\n");
-  disastrOS_semOpen(1,1);
-  disastrOS_semOpen(2,2);
+  disastrOS_semOpen(1,10);
+  disastrOS_semOpen(2,0);
   for (int i=0; i<(disastrOS_getpid()+1); ++i){
     printf("PID: %d, iterate %d\n", disastrOS_getpid(), i);
     disastrOS_sleep((20-disastrOS_getpid())*5);
