@@ -311,6 +311,10 @@ int disastrOS_semOpen(int id, int count) {
     return disastrOS_syscall(DSOS_CALL_SEMOPEN, id, count);
 }
 
+int disastrOS_semClose(int id){
+    return disastrOS_syscall(DSOS_CALL_SEMCLOSE, id);
+}
+
 
 
 void disastrOS_printStatus(){
