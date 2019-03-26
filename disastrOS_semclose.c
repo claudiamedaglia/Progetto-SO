@@ -11,9 +11,9 @@ void internal_semClose(){
     //prendo descrittore del semaforo con quell'id
     SemDescriptor* s_desc = SemDescriptorList_byFd(&running->sem_descriptors, id);
     //controllo di aver trovato il descrittore
-    if(!s_desc){
+    if(s_desc==0){
         disastrOS_debug("Chiusura semaforo fallita\n");
-        running->syscall_retvalue = -1;
+        running->syscall_retvalue = DSOS_ESEMCLOSE;
         return;
     }
     //lo rimuovo dalla lista dei descrittori dei semafori
@@ -22,22 +22,19 @@ void internal_semClose(){
     //prendo il semaforo
     Semaphore* s = s_desc->semaphore;
     //controllo di aver trovato il semaforo
-    if(!s){
-          running->syscall_retvalue = -1;
+    if(s==0){
+          running->syscall_retvalue = DSOS_ESEMCLOSE;
           return;
     }
     //rimuovo il puntatore al descrittore dalla lista dei semafori
     SemDescriptorPtr* d_ptr = (SemDescriptorPtr*)List_detach(&s->descriptors, (ListItem*)(s_desc->ptr));
-    if(!d_ptr){
-        running->syscall_retvalue = -1;
-        return;
-    }
+
     //libero memoria
     SemDescriptor_free(s_desc);
     SemDescriptorPtr_free(d_ptr);
     
     //se non ho descrittori, rimuovo il semaforo dalla lista
-    if(s->descriptors.size == 0){
+    if(s->descriptors.size == 0 && s->waiting_descriptors.size==0){
         List_detach(&semaphores_list, (ListItem*)s);
         Semaphore_free(s);
     }
