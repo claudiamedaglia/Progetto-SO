@@ -12,7 +12,7 @@ void internal_semClose(){
     SemDescriptor* s_desc = SemDescriptorList_byFd(&running->sem_descriptors, id);
     //controllo di aver trovato il descrittore
     if(s_desc==0){
-        disastrOS_debug("Chiusura semaforo fallita\n");
+        printf("Chiusura semaforo %d fallita\n", id);
         running->syscall_retvalue = DSOS_ESEMCLOSE;
         return;
     }
@@ -23,6 +23,7 @@ void internal_semClose(){
     Semaphore* s = s_desc->semaphore;
     //controllo di aver trovato il semaforo
     if(s==0){
+          printf("Chiusura del semaforo %d fallita\n",id);
           running->syscall_retvalue = DSOS_ESEMCLOSE;
           return;
     }
@@ -37,6 +38,7 @@ void internal_semClose(){
     if(s->descriptors.size == 0 && s->waiting_descriptors.size==0){
         List_detach(&semaphores_list, (ListItem*)s);
         Semaphore_free(s);
+        printf("Chiusura semaforo %d\n",id);
     }
     
     running->syscall_retvalue = 0;

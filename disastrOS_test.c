@@ -20,19 +20,34 @@ void childFunction(void* args){
   int mode=0;
   int fd=disastrOS_openResource(disastrOS_getpid(),type,mode);
   printf("fd=%d\n", fd);
+  
+  printf("\n");
+  printf("-----------------------------------------------\n");
+  printf("---------------OPEN SEMAPHORES by %d-----------\n", disastrOS_getpid());
+  printf("-----------------------------------------------\n");
+  printf("\n");
+  int s1 = disastrOS_semOpen(1,10);
+  int s2 = disastrOS_semOpen(2,0);
+  int s3 = disastrOS_semOpen(3, -10);
+
+  disastrOS_printStatus();
+  //for (int i=0; i<(disastrOS_getpid()+1); ++i){
+  //  printf("PID: %d, iterate %d\n", disastrOS_getpid(), i);
+  //  disastrOS_sleep((20-disastrOS_getpid())*5);
+  //}
+
   printf("PID: %d, terminating\n", disastrOS_getpid());
+
   printf("\n");
   printf("-----------------------------------------------\n");
-  printf("---------------OPEN SEMAPHORES-----------------\n");
+  printf("---------------CLOSE SEMAPHORES by %d----------\n", disastrOS_getpid());
   printf("-----------------------------------------------\n");
   printf("\n");
-  disastrOS_semOpen(1,10);
-  disastrOS_semOpen(2,0);
-  for (int i=0; i<(disastrOS_getpid()+1); ++i){
-    printf("PID: %d, iterate %d\n", disastrOS_getpid(), i);
-    disastrOS_sleep((20-disastrOS_getpid())*5);
-  }
-  disastrOS_exit(disastrOS_getpid()+1);
+  disastrOS_semClose(s1);
+  disastrOS_semClose(s2);
+  disastrOS_semClose(s3);
+
+  disastrOS_exit(disastrOS_getpid());
 }
 
 

@@ -9,13 +9,19 @@
 void internal_semOpen(){
   int id = running->syscall_args[0];
   int count = running->syscall_args[1];
+  
+  if(count < 0 ){
+        printf("Allocazione semaforo con id=%d fallita\n", id);
+        running->syscall_retvalue = DSOS_ESEMOPEN;
+        return;
+   }
   //Controllo che non esista già un semaforo con quell'id
   Semaphore* s = SemaphoreList_byId(&semaphores_list, id);
 
   if(s == 0){ //semaforo non esiste
     s = Semaphore_alloc(id,count);
     if(s==0){ //controllo se il semaforo è stato allocato correttam
-        printf("Allocazione semaforo fallita");
+        printf("Allocazione semaforo con id=%d fallita\n", id);
         running->syscall_retvalue = DSOS_ESEMOPEN;
         return;
     }
