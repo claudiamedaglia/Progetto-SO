@@ -20,13 +20,14 @@ Se tutto è andato a buon fine la funzione ha come valore di ritorno 0.
 
 Questa funzione decrementa il campo count del semaforo identificato dall'id passato come argomento, se questo esiste.
 Infatti il primo controllo fatto dalla funzione è quello di andare a ricercare il descrittore del semaforo tramite il suo id nella lista dei descrittori del processo in running: se il descrittore non viene trovato viene ritornato un messaggio d'errore, altrimenti tramite il descrittore mi salvo il puntatore a quest'ultimo e il semaforo, decrementandone quindi il campo count.
-Se il valore della variabile count del semaforo è positivo, la funzione ritorna e il processo che ha chiamato la semWait può continuare la sua esecuzione. Se invece il valore di count è strettamente negativo, il puntatore al descrittore viene eliminato dalla lista dei descrittori per essere inserito nella waiting_descriptors, il processo cambia il suo stato in Waiting e viene inserito nella waiting_list dei processi per ultimo.
-Viene quindi mandato in running il primo elemento della ready_list. 
+Se il valore della variabile count del semaforo è positivo, la funzione ritorna e il processo che ha chiamato la semWait può continuare la sua esecuzione. Se invece il valore di count è strettamente negativo, il puntatore al descrittore viene eliminato dalla lista dei descrittori per essere inserito nella waiting_descriptors (1), il processo cambia il suo stato in Waiting e viene inserito nella waiting_list dei processi per ultimo (2).
+Viene quindi mandato in running il primo elemento della ready_list (3). 
 Se tutto è andato a buon fine la funzione ha come valore di ritorno 0.
 
 **disastrOS_semPost(int id)**
 Questa funzione incrementa il campo count del semaforo identificato dall'id passato come argomento, se questo esiste.
 Infatti il primo controllo fatto dalla funzione è quello di andare a ricercare il descrittore del semaforo tramite il suo id nella lista dei descrittori del processo in running: se il descrittore non viene trovato viene ritornato un messaggio d'errore, altrimenti tramite il descrittore mi salvo il semaforo, incrementandone quindi il campo count.
 Se il valore della variabile count è strettamente positivo, la funzione ritorna.
-Se invece il valore di count è maggiore uguale a 0
-
+Se invece il valore di count è maggiore uguale a 0, inserisco il processo corrente nella ready_list per ultimo settando il suo stato a Ready (2), il puntatore al descrittore del semaforo viene eliminato dalla lista waiting_descriptors per essere inserito nella lista dei descrittori del semaforo (1).
+Viene poi preso il primo processo dalla waiting_list del semaforo e mandato in esecuzione (3).
+Se tutto è andato a buon fine la funzione ha come valore di ritorno 0.
