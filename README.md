@@ -16,7 +16,7 @@ Rimuovo poi il puntatore del descrittore trovato dalla lista dei descrittori del
 Infine, se il processo che ha chiamato la semClose è l'ultimo processo rimasto ad aver aperto il semaforo (ovvero il numero di descrittori aperti del semaforo è uguale e 0), allora elimino il semaforo dalla Semaphore_list(1) e libero memoria (Semaphore_free).
 Se tutto è andato a buon fine la funzione ha come valore di ritorno 0.
 
-**disastrOS_semWait(int id)
+**disastrOS_semWait(int id)**
 
 Questa funzione decrementa il count del semaforo identificato dall'id passato come argomento, se questo esiste.
 Infatti il primo controllo fatto dalla funzione è quello di andare a ricercare il descrittore del semaforo tramite il suo id nella lista dei descrittori del processo in running: se il descrittore non viene trovato viene ritornato un messaggio d'errore, altrimenti tramite il descrittore mi salvo il puntatore a quest'ultimo e il semaforo, decrementandone quindi il campo count.
