@@ -31,3 +31,8 @@ Se il valore della variabile count è strettamente positivo, la funzione ritorna
 Se invece il valore di count è maggiore uguale a 0, inserisco il processo corrente nella ready_list per ultimo settando il suo stato a Ready (2), il puntatore al descrittore del semaforo viene eliminato dalla lista waiting_descriptors per essere inserito nella lista dei descrittori del semaforo (1).
 Viene poi preso il primo processo dalla waiting_list del semaforo e mandato in esecuzione (3).
 Se tutto è andato a buon fine la funzione ha come valore di ritorno 0.
+
+**Compilazione**
+Per compilare:
+- gcc --std=gnu99 -Wall -o disastrOS_test2 disastrOS_test2.c libdisastrOS.a    per eseguire il primo test (disastrOS_test2)
+- Make      per eseguire il secondo test (disastrOS_test)
