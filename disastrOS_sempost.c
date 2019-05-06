@@ -11,7 +11,7 @@ void internal_semPost(){
     
     SemDescriptor* s_desc = SemDescriptorList_byFd(&running->sem_descriptors, id); //prendo descrittore del semaforo con quell'id
     if(s_desc==0){ //controllo di aver trovato il descrittore
-        printf("Sempost semaforo %d fallita\n", id);
+        printf("    [SEMAFORO] Sempost semaforo con id=%d fallita\n", id);
         running->syscall_retvalue = DSOS_ESEMPOST;
         return;
     }
